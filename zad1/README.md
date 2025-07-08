@@ -11,3 +11,4 @@
 ### Uwagi
 - w wykresie porównawczym (**graph.png**) przy wartościach osi OY zapomniałem pomnożyć je przez 50000 (liczba powtórzeń wykonania funkcji).
 Z tego powodu wartości są zdecydowanie za małe, natomiast proporcje są zachowane
+- ocena: 47/50 pkt
