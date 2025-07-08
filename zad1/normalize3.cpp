@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <cctype>
+
+#define REPEATS 50000
+
+static double gtod_ref_time_sec = 0.0;
+
+// Adapted from the bl2_clock() routine in the BLIS library
+double dclock() {
+	double the_time, norm_sec;
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+
+	if(gtod_ref_time_sec == 0.0)
+    	gtod_ref_time_sec = (double)tv.tv_sec;
+  
+	norm_sec = (double)tv.tv_sec - gtod_ref_time_sec;
+	the_time = norm_sec + tv.tv_usec * 1.0e-6;
+
+	return the_time;
+}
+
+// function to be optimized
+std::string process_large_string(const std::string & s) {
+    std::string result, last, current;
+	bool flag;
+
+	// first optimization
+	result.reserve(s.length());
+
+    for(int i = 0; i < s.length(); i++) {
+		if(isspace(s[i])) {
+			if(current != last) {
+				if(current.length()) {
+					result += current; // 2nd optimization
+					last = current;
+				}
+
+				if(flag)
+					result += ' '; // 2nd optimization
+			}
+
+			current.clear();
+			flag = false;
+		} else if(ispunct(s[i])) {
+			if(current.length() && current != last) {
+				result += current; // 2nd optimization
+				last = current;
+			}
+
+			result += ','; // 2nd optimization
+			current.clear();
+			flag = true;
+		} else if(s[i] >= 0x20 && s[i] <= 0x7E) {
+			current += (char)tolower(s[i]); // 2nd optimization
+			flag = true;
+		}
+    }
+
+    return result;
+}
+
+int main(int argc, const char* argv[]) {
+	int i, j, k, iret;
+	double dtime;
+	std::string s, result, line;
+  
+	std::cout << "Let's start processing the file\n";
+  
+	while(getline(std::cin, line))
+    	s += line + "\n";
+  
+	// we start the clock
+	dtime = dclock();
+
+	for(int i = 0; i < REPEATS; i++)
+    	result = process_large_string(s);
+	
+	// calculate the time taken
+	dtime = dclock() - dtime;
+  
+	std::cout << result << "\n";  
+	std::cout << "Time: " << dtime << "\n";
+	fflush(stdout);
+
+	return iret;
+}
