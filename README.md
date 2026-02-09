@@ -1,5 +1,5 @@
 # OKNRA_2024_2025
-### Repository for OKNRA (Optymalizacja kodu na różne architektury - Code optimization for different architectures) course at AGH University
+### Repository for OKNRA (Optymalizacja Kodu Na Różne Architektury - Code Optimization for Different Architectures) course at AGH University
 
 Repozytorium zawiera rozwiązania zadań z kolejnych laboratoriów (pliki **.c** lub **.c++**) wraz z poleceniami (pliki **.pdf**) - katalogi **lab*i***, `i = 1, 2,..., 6` oraz programy i wszystkie potrzebne pliki związane z zadaniami domowymi - katalogi _zad1_ oraz _zad2_.
 Numeracja w nazwach plików z poleceniami poza pierwszym laboratorium jest "rozjechana", prawdopodobnie zmieniła się kolejność niektórych laboratoriów w porównaniu do poprzednich lat.
